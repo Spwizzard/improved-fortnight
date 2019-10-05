@@ -14,14 +14,17 @@ public class ObjectSpawner : MonoBehaviour
     public int maxY = 20;
     public int minZ = -20;
     public int maxZ = 20;
+    public float despawnDistance = 20f;
 
     private GameObject parentGO;
+    private GameObject playerGO;
     private ArrayList objectList;
 
     // Start is called before the first frame update
     void Start()
     {
         objectList = new ArrayList(numberOfParticles);
+        playerGO = GameObject.Find("PlayerStartingParticle");
         parentGO = GameObject.Find("Objects");
         for(int i = 0; i < numberOfParticles; i++){
             Vector3 pos = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), Random.Range(minZ, maxZ));
@@ -39,5 +42,18 @@ public class ObjectSpawner : MonoBehaviour
     void Update()
     {
 
+    }
+
+    void FixedUpdate()
+    {
+        foreach(GameObject go in objectList)
+        {
+            if(Vector3.Distance(go.transform.position, playerGO.transform.position) > despawnDistance)
+            {
+                go.transform.position = playerGO.transform.position + new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), Random.Range(minZ, maxZ));
+                //Destroy(gameObject);
+            }
+        }
+        
     }
 }

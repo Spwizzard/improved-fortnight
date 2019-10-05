@@ -446,12 +446,13 @@ MonoBehaviour:
   lightGasParticlePrefab: {fileID: 7558388719466841317, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
     type: 3}
   numberOfParticles: 200
-  minX: -20
-  maxX: 20
-  minY: -20
-  maxY: 20
-  minZ: -20
-  maxZ: 20
+  minX: -30
+  maxX: 30
+  minY: -30
+  maxY: 30
+  minZ: -30
+  maxZ: 30
+  despawnDistance: 20
 --- !u!4 &1250615156
 Transform:
   m_ObjectHideFlags: 0
