@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1321461565}
   - component: {fileID: 1321461568}
   - component: {fileID: 1321461566}
-  - component: {fileID: 4699549512849791516}
   - component: {fileID: 1321461571}
   m_Layer: 0
   m_Name: PlayerStartingParticle
@@ -92,23 +91,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 10
-  gravityConstant: 4
   eatMagnitude: 0.3
   playerForceScalar: 1
   gcObjectSpawner: {fileID: 0}
---- !u!114 &4699549512849791516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7558388719466841317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d03b3db686a88f54d8a299f1d79ff3d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravityConstant: 4
+  currentMass: 0
 --- !u!135 &1321461571
 SphereCollider:
   m_ObjectHideFlags: 0

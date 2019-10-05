@@ -10,11 +10,12 @@ public class PlayerMovement : MonoBehaviour
     private float squareMaxVelocity;
     private Transform cameraTransform;
     public float maxVelocity = 3f;
-    public float gravityConstant = 9.8f;
     public float eatMagnitude = 0.1f;
+    private float startingEatMagnitude = 0.1f;
     public float playerForceScalar = 2.0f;
 
     public ObjectSpawner gcObjectSpawner;
+    public float currentMass;
 
 
     private Rigidbody rb;
@@ -26,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
         squareMaxVelocity = Mathf.Pow(maxVelocity, 2);
 
         rb = gameObject.GetComponent<Rigidbody>();
+        currentMass = rb.mass;
+
+        startingEatMagnitude = eatMagnitude;
     }
 
     // Update is called once per frame
@@ -37,6 +41,12 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        //Update the player's current mass
+        rb.mass = currentMass;
+        transform.localScale = new Vector3(1,1,1) * ((Mathf.Log(currentMass) * 1.5f) + 1); 
+        eatMagnitude = startingEatMagnitude * ((Mathf.Log(currentMass) * 1.5f) + 1);
+
+        //Move if either mouse is clicked
         if(mouse1Clicked || mouse2Clicked){
             Vector3 direction = new Vector3(transform.position.x - cameraTransform.position.x,
                                             transform.position.y - cameraTransform.position.y,
@@ -44,9 +54,10 @@ public class PlayerMovement : MonoBehaviour
             if(mouse2Clicked){
                 direction *= -1;
             }
-            rb.AddForce(direction * playerForceScalar);
+            rb.AddForce(direction * playerForceScalar * currentMass);
         }  
 
+        //cap velocity
         if(rb.velocity.sqrMagnitude > squareMaxVelocity){
             rb.AddForce(-rb.velocity.normalized * (rb.velocity.magnitude - maxVelocity));
         }
@@ -57,13 +68,11 @@ public class PlayerMovement : MonoBehaviour
 
             Vector3 direction = transform.position - other.transform.position;
             if(direction.magnitude < eatMagnitude){
+                currentMass += other.attachedRigidbody.mass;
                 gcObjectSpawner.resetObject(other.gameObject);
-                //increment points?
+                Debug.Log(currentMass);
                 return;
             }
-
-            //float gravity = gravityConstant * rb.mass * other.attachedRigidbody.mass / Mathf.Pow(direction.magnitude, 2);
-            //other.attachedRigidbody.AddForce(direction.normalized * gravity);
         }
     }
 }

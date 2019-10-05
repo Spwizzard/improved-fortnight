@@ -9,7 +9,9 @@ public class ObjectSpawner : MonoBehaviour
 
     public int numberOfParticles = 100;
     public float spawnDistance = 50f;
+    private float startingSpawnDistance = 50f;
     public float despawnDistance = 20f;
+    private float startingDespawnDistance = 20f;
 
     private GameObject parentGO;
     private GameObject playerGO;
@@ -26,11 +28,8 @@ public class ObjectSpawner : MonoBehaviour
             GameObject go = Instantiate(lightGasParticlePrefab, pos, Quaternion.identity);
             go.transform.parent = parentGO.transform;
             objectList.Add(go);
-
-            Rigidbody rb = go.GetComponent<Rigidbody>();
-            rb.AddForce(getRandomVector3(0.25f), ForceMode.Impulse);
+            respawnObject(go);
         }
-
     }
 
     // Update is called once per frame
@@ -55,6 +54,8 @@ public class ObjectSpawner : MonoBehaviour
     public void resetObject(GameObject go){
         GameObject listObject = objectList.Find(x => x == go);
         if(listObject){
+            spawnDistance = startingSpawnDistance * ((Mathf.Log(playerGO.GetComponent<Rigidbody>().mass) * 1.5f) + 1);
+            despawnDistance = startingDespawnDistance * ((Mathf.Log(playerGO.GetComponent<Rigidbody>().mass) * 1.5f) + 1);
             respawnObject(listObject);
         }
     }
@@ -63,7 +64,9 @@ public class ObjectSpawner : MonoBehaviour
     {
         go.transform.position = playerGO.transform.position + getRandomVector3(spawnDistance);
         Rigidbody rb = go.GetComponent<Rigidbody>();
-        rb.velocity = getRandomVector3(0.25f);
+        rb.velocity = new Vector3();
+        rb.AddForce(getRandomVector3(0.25f), ForceMode.Impulse);
+        rb.AddTorque(getRandomVector3(0.5f), ForceMode.Impulse);
     }
 
     Vector3 getRandomVector3(float magnitude){

@@ -308,10 +308,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1321461568, guid: 5d8c11d97209ecd43b0510a18ba6a760, type: 3}
+      propertyPath: m_Radius
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1321461566, guid: 5d8c11d97209ecd43b0510a18ba6a760, type: 3}
       propertyPath: gcObjectSpawner
       value: 
       objectReference: {fileID: 1250615155}
+    - target: {fileID: 1321461566, guid: 5d8c11d97209ecd43b0510a18ba6a760, type: 3}
+      propertyPath: eatMagnitude
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d8c11d97209ecd43b0510a18ba6a760, type: 3}
 --- !u!1 &963194225
@@ -392,7 +400,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -2}
+  m_LocalPosition: {x: 0, y: 1, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -411,13 +419,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1321461567}
-  distance: 10
+  distance: 2
   xSpeed: 50
   ySpeed: 50
   yMinLimit: -90
   yMaxLimit: 90
-  distanceMin: 2
-  distanceMax: 2
 --- !u!1 &1250615154
 GameObject:
   m_ObjectHideFlags: 0

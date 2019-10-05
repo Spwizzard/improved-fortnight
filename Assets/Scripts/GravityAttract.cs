@@ -22,7 +22,10 @@ public class GravityAttract : MonoBehaviour
      void OnTriggerStay(Collider other)
     {   
         if(other.attachedRigidbody){
-
+            if(rb == null)
+            {
+                return;
+            }
             Vector3 direction = transform.position - other.transform.position;
             float gravity = gravityConstant * rb.mass * other.attachedRigidbody.mass / Mathf.Pow(direction.magnitude, 2);
             other.attachedRigidbody.AddForce(direction.normalized * gravity);
