@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BeginningParticleM
+  m_Name: LightGasParticleM
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
-  m_LightmapFlags: 4
+  m_ShaderKeywords: _EMISSION _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+  m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -73,5 +73,5 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.4339623, g: 0.2821251, b: 0.04298683, a: 1}
-    - _EmissionColor: {r: 0.013655695, g: 0.0017069619, b: 0.0012802214, a: 1}
+    - _Color: {r: 1, g: 0.031372547, b: 0.7677181, a: 1}
+    - _EmissionColor: {r: 0.10377358, g: 0.10377358, b: 0.10377358, a: 1}
