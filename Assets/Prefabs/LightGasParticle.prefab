@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4098897960616496898}
   - component: {fileID: -7487153309883854575}
   - component: {fileID: 1490331358277273667}
+  - component: {fileID: 7151497735875871769}
   m_Layer: 0
   m_Name: LightGasParticle
   m_TagString: Untagged
@@ -63,6 +64,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 0}
   despawnDistance: 20
+--- !u!135 &7151497735875871769
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7558388719466841317}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5030225200457603818
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70,6 +84,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4098897960616496898}
     m_Modifications:
+    - target: {fileID: -927199367670048503, guid: cc3a16ee5845e6d489dd35f17050b409,
+        type: 3}
+      propertyPath: m_Name
+      value: StartingParticle
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: cc3a16ee5845e6d489dd35f17050b409,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -124,11 +143,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: cc3a16ee5845e6d489dd35f17050b409,
-        type: 3}
-      propertyPath: m_Name
-      value: StartingParticle
       objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: cc3a16ee5845e6d489dd35f17050b409,
         type: 3}
