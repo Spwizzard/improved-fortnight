@@ -412,8 +412,8 @@ MonoBehaviour:
   ySpeed: 50
   yMinLimit: -90
   yMaxLimit: 90
-  distanceMin: 0.5
-  distanceMax: 3
+  distanceMin: 2
+  distanceMax: 2
 --- !u!1 &1250615154
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,12 +446,7 @@ MonoBehaviour:
   lightGasParticlePrefab: {fileID: 7558388719466841317, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
     type: 3}
   numberOfParticles: 500
-  minX: -30
-  maxX: 30
-  minY: -30
-  maxY: 30
-  minZ: -30
-  maxZ: 30
+  spawnDistance: 50
   despawnDistance: 20
 --- !u!4 &1250615156
 Transform:
@@ -502,9 +497,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 10
+  gravityConstant: 2
+  eatMagnitude: 0.2
+  gcObjectSpawner: {fileID: 1250615155}
 --- !u!4 &1321461567 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4098897960616496898, guid: 5d8c11d97209ecd43b0510a18ba6a760,
     type: 3}
   m_PrefabInstance: {fileID: 831662352}
   m_PrefabAsset: {fileID: 0}
+--- !u!135 &1321461568
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321461564}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
