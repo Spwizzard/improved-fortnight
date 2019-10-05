@@ -28,7 +28,7 @@ public class ObjectSpawner : MonoBehaviour
             objectList.Add(go);
 
             Rigidbody rb = go.GetComponent<Rigidbody>();
-            rb.AddForce(getRandomVector3(0.5f), ForceMode.Impulse);
+            rb.AddForce(getRandomVector3(0.25f), ForceMode.Impulse);
         }
 
     }
@@ -55,7 +55,6 @@ public class ObjectSpawner : MonoBehaviour
     public void resetObject(GameObject go){
         GameObject listObject = objectList.Find(x => x == go);
         if(listObject){
-            Debug.Log("got an object in the list");
             respawnObject(listObject);
         }
     }
@@ -64,7 +63,7 @@ public class ObjectSpawner : MonoBehaviour
     {
         go.transform.position = playerGO.transform.position + getRandomVector3(spawnDistance);
         Rigidbody rb = go.GetComponent<Rigidbody>();
-        rb.velocity = getRandomVector3(0.5f);
+        rb.velocity = getRandomVector3(0.25f);
     }
 
     Vector3 getRandomVector3(float magnitude){

@@ -27,7 +27,7 @@ public class MouseOrbit : MonoBehaviour {
         x = angles.y;
         y = angles.x;
  
-        rb = GetComponent<Rigidbody>();
+        rb = gameObject.GetComponent<Rigidbody>();
  
         // Make the rigid body not change rotation
         if (rb != null)

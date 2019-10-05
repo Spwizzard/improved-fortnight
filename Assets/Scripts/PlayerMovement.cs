@@ -5,14 +5,17 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-    private bool mouseClicked;
+    private bool mouse1Clicked;
+    private bool mouse2Clicked;
     private float squareMaxVelocity;
     private Transform cameraTransform;
     public float maxVelocity = 3f;
     public float gravityConstant = 9.8f;
     public float eatMagnitude = 0.1f;
+    public float playerForceScalar = 2.0f;
 
     public ObjectSpawner gcObjectSpawner;
+
 
     private Rigidbody rb;
 
@@ -22,22 +25,26 @@ public class PlayerMovement : MonoBehaviour
         cameraTransform = Camera.main.transform;
         squareMaxVelocity = Mathf.Pow(maxVelocity, 2);
 
-        rb = GetComponent<Rigidbody>();
+        rb = gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        mouseClicked = Input.GetButton("Fire1");
+        mouse1Clicked = Input.GetButton("Fire1");
+        mouse2Clicked = Input.GetButton("Fire2");
     }
 
     void FixedUpdate()
     {
-        if(mouseClicked){
+        if(mouse1Clicked || mouse2Clicked){
             Vector3 direction = new Vector3(transform.position.x - cameraTransform.position.x,
                                             transform.position.y - cameraTransform.position.y,
                                             transform.position.z - cameraTransform.position.z);
-            rb.AddForce(direction);
+            if(mouse2Clicked){
+                direction *= -1;
+            }
+            rb.AddForce(direction * playerForceScalar);
         }  
 
         if(rb.velocity.sqrMagnitude > squareMaxVelocity){
@@ -55,8 +62,8 @@ public class PlayerMovement : MonoBehaviour
                 return;
             }
 
-            float gravity = gravityConstant * rb.mass * other.attachedRigidbody.mass / Mathf.Pow(direction.magnitude, 2);
-            other.attachedRigidbody.AddForce(direction.normalized * gravity);
+            //float gravity = gravityConstant * rb.mass * other.attachedRigidbody.mass / Mathf.Pow(direction.magnitude, 2);
+            //other.attachedRigidbody.AddForce(direction.normalized * gravity);
         }
     }
 }
