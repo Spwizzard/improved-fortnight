@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
        if(Input.GetButtonDown("Fire1")){
            mouseClicked = true;
        } 
+
+       rb = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
