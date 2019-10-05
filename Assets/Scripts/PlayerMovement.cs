@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     private Transform cameraTransform;
     public float maxVelocity = 3f;
     public float gravityConstant = 9.8f;
+    public float eatMagnitude = 0.1f;
+
+    public ObjectSpawner gcObjectSpawner;
 
     private Rigidbody rb;
 
@@ -44,7 +47,14 @@ public class PlayerMovement : MonoBehaviour
      void OnTriggerStay(Collider other)
     {
         if(other.attachedRigidbody){
+
             Vector3 direction = transform.position - other.transform.position;
+            if(direction.magnitude < eatMagnitude){
+                gcObjectSpawner.resetObject(other.gameObject);
+                //increment points?
+                return;
+            }
+
             float gravity = gravityConstant * rb.mass * other.attachedRigidbody.mass / Mathf.Pow(direction.magnitude, 2);
             other.attachedRigidbody.AddForce(direction.normalized * gravity);
         }

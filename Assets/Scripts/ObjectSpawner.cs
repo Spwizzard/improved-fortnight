@@ -13,12 +13,12 @@ public class ObjectSpawner : MonoBehaviour
 
     private GameObject parentGO;
     private GameObject playerGO;
-    private ArrayList objectList;
+    private List<GameObject> objectList;
 
     // Start is called before the first frame update
     void Start()
     {
-        objectList = new ArrayList(numberOfParticles);
+        objectList = new List<GameObject>(numberOfParticles);
         playerGO = GameObject.Find("PlayerStartingParticle");
         parentGO = GameObject.Find("Objects");
         for(int i = 0; i < numberOfParticles; i++){
@@ -45,11 +45,26 @@ public class ObjectSpawner : MonoBehaviour
         {
             if(Vector3.Distance(go.transform.position, playerGO.transform.position) > despawnDistance)
             {
-                go.transform.position = playerGO.transform.position + getRandomVector3(spawnDistance);
+                respawnObject(go);
                 //Destroy(gameObject);
             }
         }
         
+    }
+
+    public void resetObject(GameObject go){
+        GameObject listObject = objectList.Find(x => x == go);
+        if(listObject){
+            Debug.Log("got an object in the list");
+            respawnObject(listObject);
+        }
+    }
+
+    void respawnObject(GameObject go)
+    {
+        go.transform.position = playerGO.transform.position + getRandomVector3(spawnDistance);
+        Rigidbody rb = go.GetComponent<Rigidbody>();
+        rb.velocity = getRandomVector3(0.5f);
     }
 
     Vector3 getRandomVector3(float magnitude){
