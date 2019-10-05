@@ -148,77 +148,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &445348923
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 7558388719466841317, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
-        type: 3}
-      propertyPath: m_Name
-      value: LightGasParticle
-      objectReference: {fileID: 0}
-    - target: {fileID: 4098897960616496898, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.39
-      objectReference: {fileID: 0}
-    - target: {fileID: 4098897960616496898, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4098897960616496898, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.398
-      objectReference: {fileID: 0}
-    - target: {fileID: 4098897960616496898, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4098897960616496898, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4098897960616496898, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4098897960616496898, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4098897960616496898, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4098897960616496898, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4098897960616496898, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4098897960616496898, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,7 +445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightGasParticlePrefab: {fileID: 7558388719466841317, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
     type: 3}
-  numberOfParticles: 100
+  numberOfParticles: 200
   minX: -20
   maxX: 20
   minY: -20
@@ -533,7 +464,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1321461564 stripped
 GameObject:

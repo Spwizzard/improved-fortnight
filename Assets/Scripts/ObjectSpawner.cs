@@ -28,12 +28,16 @@ public class ObjectSpawner : MonoBehaviour
             GameObject go = Instantiate(lightGasParticlePrefab, pos, Quaternion.identity);
             go.transform.parent = parentGO.transform;
             objectList.Add(go);
+
+            Rigidbody rb = go.GetComponent<Rigidbody>();
+            rb.AddForce(new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f)), ForceMode.Impulse);
         }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
