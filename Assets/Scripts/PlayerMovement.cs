@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool mouseClicked;
     private float squareMaxVelocity;
-    public Transform cameraTransform;
+    private Transform cameraTransform;
     public float maxVelocity = 3f;
 
     private Rigidbody rb;
@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         cameraTransform = Camera.main.transform;
-        squareMaxVelocity = Mathf.Sqrt(maxVelocity);
+        squareMaxVelocity = Mathf.Pow(maxVelocity, 2);
 
         rb = GetComponent<Rigidbody>();
     }
@@ -24,24 +24,20 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if(Input.GetButtonDown("Fire1")){
-           mouseClicked = true;
-       }    
+        mouseClicked = Input.GetButton("Fire1");
     }
 
     void FixedUpdate()
     {
         if(mouseClicked){
-            mouseClicked = false;
             Vector3 direction = new Vector3(transform.position.x - cameraTransform.position.x,
                                             transform.position.y - cameraTransform.position.y,
                                             transform.position.z - cameraTransform.position.z);
-            rb.AddForce(direction, ForceMode.Impulse);
-        }
+            rb.AddForce(direction);
+        }  
 
-        
         if(rb.velocity.sqrMagnitude > squareMaxVelocity){
-            rb.velocity = rb.velocity.normalized * maxVelocity;
+            rb.AddForce(-rb.velocity.normalized * (rb.velocity.magnitude - maxVelocity));
         }
     }
 }
