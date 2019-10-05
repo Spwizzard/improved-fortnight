@@ -8,12 +8,7 @@ public class ObjectSpawner : MonoBehaviour
     public GameObject lightGasParticlePrefab;
 
     public int numberOfParticles = 100;
-    public int minX = -20;
-    public int maxX = 20;
-    public int minY = -20;
-    public int maxY = 20;
-    public int minZ = -20;
-    public int maxZ = 20;
+    public float spawnDistance = 50f;
     public float despawnDistance = 20f;
 
     private GameObject parentGO;
@@ -27,13 +22,13 @@ public class ObjectSpawner : MonoBehaviour
         playerGO = GameObject.Find("PlayerStartingParticle");
         parentGO = GameObject.Find("Objects");
         for(int i = 0; i < numberOfParticles; i++){
-            Vector3 pos = new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), Random.Range(minZ, maxZ));
+            Vector3 pos = getRandomVector3(spawnDistance);
             GameObject go = Instantiate(lightGasParticlePrefab, pos, Quaternion.identity);
             go.transform.parent = parentGO.transform;
             objectList.Add(go);
 
             Rigidbody rb = go.GetComponent<Rigidbody>();
-            rb.AddForce(new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f)), ForceMode.Impulse);
+            rb.AddForce(getRandomVector3(0.5f), ForceMode.Impulse);
         }
 
     }
@@ -50,10 +45,14 @@ public class ObjectSpawner : MonoBehaviour
         {
             if(Vector3.Distance(go.transform.position, playerGO.transform.position) > despawnDistance)
             {
-                go.transform.position = playerGO.transform.position + new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), Random.Range(minZ, maxZ));
+                go.transform.position = playerGO.transform.position + getRandomVector3(spawnDistance);
                 //Destroy(gameObject);
             }
         }
         
+    }
+
+    Vector3 getRandomVector3(float magnitude){
+        return new Vector3(Random.Range(-magnitude, magnitude), Random.Range(-magnitude, magnitude), Random.Range(-magnitude, magnitude));
     }
 }

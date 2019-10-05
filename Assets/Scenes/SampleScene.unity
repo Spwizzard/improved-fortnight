@@ -445,7 +445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightGasParticlePrefab: {fileID: 7558388719466841317, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
     type: 3}
-  numberOfParticles: 200
+  numberOfParticles: 500
   minX: -30
   maxX: 30
   minY: -30
@@ -501,8 +501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e3532a087f66c4a92dffac56f12166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 0}
-  rb: {fileID: 0}
+  maxVelocity: 10
 --- !u!4 &1321461567 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4098897960616496898, guid: 5d8c11d97209ecd43b0510a18ba6a760,

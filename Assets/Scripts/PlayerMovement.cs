@@ -6,14 +6,19 @@ public class PlayerMovement : MonoBehaviour
 {
 
     private bool mouseClicked;
+    private float squareMaxVelocity;
     public Transform cameraTransform;
+    public float maxVelocity = 3f;
 
-    public Rigidbody rb;
+    private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
         cameraTransform = Camera.main.transform;
+        squareMaxVelocity = Mathf.Sqrt(maxVelocity);
+
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -21,9 +26,7 @@ public class PlayerMovement : MonoBehaviour
     {
        if(Input.GetButtonDown("Fire1")){
            mouseClicked = true;
-       } 
-
-       rb = GetComponent<Rigidbody>();
+       }    
     }
 
     void FixedUpdate()
@@ -34,6 +37,11 @@ public class PlayerMovement : MonoBehaviour
                                             transform.position.y - cameraTransform.position.y,
                                             transform.position.z - cameraTransform.position.z);
             rb.AddForce(direction, ForceMode.Impulse);
+        }
+
+        
+        if(rb.velocity.sqrMagnitude > squareMaxVelocity){
+            rb.velocity = rb.velocity.normalized * maxVelocity;
         }
     }
 }
