@@ -30,6 +30,9 @@ public class ObjectSpawner : MonoBehaviour
             objectList.Add(go);
             respawnObject(go);
         }
+
+        startingSpawnDistance = spawnDistance;
+        startingDespawnDistance = despawnDistance;
     }
 
     // Update is called once per frame
@@ -54,8 +57,8 @@ public class ObjectSpawner : MonoBehaviour
     public void resetObject(GameObject go){
         GameObject listObject = objectList.Find(x => x == go);
         if(listObject){
-            spawnDistance = startingSpawnDistance * ((Mathf.Log(playerGO.GetComponent<Rigidbody>().mass) * 1.5f) + 1);
-            despawnDistance = startingDespawnDistance * ((Mathf.Log(playerGO.GetComponent<Rigidbody>().mass) * 1.5f) + 1);
+            spawnDistance = startingSpawnDistance * ((Mathf.Log(playerGO.GetComponent<Rigidbody>().mass) * 0.75f) + 1);
+            despawnDistance = startingDespawnDistance * ((Mathf.Log(playerGO.GetComponent<Rigidbody>().mass) * 0.75f) + 1);
             respawnObject(listObject);
         }
     }

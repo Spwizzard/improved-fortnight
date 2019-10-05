@@ -320,6 +320,10 @@ PrefabInstance:
       propertyPath: eatMagnitude
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 1321461571, guid: 5d8c11d97209ecd43b0510a18ba6a760, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d8c11d97209ecd43b0510a18ba6a760, type: 3}
 --- !u!1 &963194225
@@ -456,8 +460,8 @@ MonoBehaviour:
   lightGasParticlePrefab: {fileID: 7558388719466841317, guid: 6f2e7b55079bdc6498f8dcc77eeb8f10,
     type: 3}
   numberOfParticles: 1000
-  spawnDistance: 50
-  despawnDistance: 60
+  spawnDistance: 30
+  despawnDistance: 31
 --- !u!4 &1250615156
 Transform:
   m_ObjectHideFlags: 0
