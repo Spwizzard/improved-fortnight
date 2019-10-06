@@ -15,6 +15,8 @@ public class StageController : MonoBehaviour
     public float stage4Mass = 20;
     public float stage5Mass = 25;
     public float stage6Mass = 30;
+    public float stage7Mass = 30;
+    public float stage8Mass = 30;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +35,13 @@ public class StageController : MonoBehaviour
     {
         playerMass = playerRb.mass;
 
-        if(playerMass >= stage6Mass){
+        if(playerMass >= stage8Mass){
+            currentStage = 8;
+        }
+        else if(playerMass >= stage7Mass){
+            currentStage = 7;
+        }
+        else if(playerMass >= stage6Mass){
             currentStage = 6;
         }
         else if(playerMass >= stage5Mass){

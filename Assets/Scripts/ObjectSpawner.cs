@@ -10,6 +10,7 @@ public class ObjectSpawner : MonoBehaviour
     public GameObject asteroid1Prefab;
     public GameObject asteroid2Prefab;
     public GameObject asteroid3Prefab;
+    public GameObject moonPrefab;
     public GameObject nebulaPrefab;
 
     public int numberOfActiveObjects = 100;
@@ -27,17 +28,20 @@ public class ObjectSpawner : MonoBehaviour
     private List<GameObject> asteroid1Pool;
     private List<GameObject> asteroid2Pool;
     private List<GameObject> asteroid3Pool;
+    private List<GameObject> moonPool;
     private List<GameObject> nebulaPool;
 
     public int currentStage = 0; 
 
-    private float[] stage0Chances = {0.95f, 1.0f, 0.0f, 0.0f, 0.0f};
-    private float[] stage1Chances = {0.7f, 0.98f, 1.0f, 0.0f, 0.0f};
-    private float[] stage2Chances = {0.2f, 0.4f, 0.95f, 1.0f, 0.0f};
-    private float[] stage3Chances = {0.0f, 0.2f, 0.8f, 1.0f, 0.0f};
-    private float[] stage4Chances = {0.0f, 0.1f, 0.3f, 0.8f, 1.0f};
-    private float[] stage5Chances = {0.0f, 0.0f, 0.2f, 0.6f, 1.0f};
-    private float[] stage6Chances = {0.0f, 0.0f, 0.0f, 0.4f, 1.0f};
+    private float[] stage0Chances = {0.95f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+    private float[] stage1Chances = {0.7f, 0.98f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+    private float[] stage2Chances = {0.2f, 0.4f, 0.95f, 1.0f, 0.0f, 0.0f, 0.0f};
+    private float[] stage3Chances = {0.0f, 0.2f, 0.8f, 1.0f, 0.0f, 0.0f, 0.0f};
+    private float[] stage4Chances = {0.0f, 0.1f, 0.3f, 0.8f, 0.98f, 1.0f, 0.0f};
+    private float[] stage5Chances = {0.0f, 0.0f, 0.2f, 0.6f, 0.95f, 1.0f, 0.0f};
+    private float[] stage6Chances = {0.0f, 0.0f, 0.0f, 0.4f, 0.9f, 1.0f, 0.0f};
+    private float[] stage7Chances = {0.0f, 0.0f, 0.0f, 0.1f, 0.4f, 1.0f, 0.0f};
+    private float[] stage8Chances = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.98f, 1.0f};
 
     private List<float[]> stageChances;
 
@@ -52,6 +56,8 @@ public class ObjectSpawner : MonoBehaviour
         stageChances.Add(stage4Chances);
         stageChances.Add(stage5Chances);
         stageChances.Add(stage6Chances);
+        stageChances.Add(stage7Chances);
+        stageChances.Add(stage8Chances);
 
         playerGO = GameObject.Find("PlayerStartingParticle");
         startingSpawnDistance = spawnDistance;
@@ -65,6 +71,7 @@ public class ObjectSpawner : MonoBehaviour
         asteroid1Pool = new List<GameObject>(numberOfActiveObjects);
         asteroid2Pool = new List<GameObject>(numberOfActiveObjects);
         asteroid3Pool = new List<GameObject>(numberOfActiveObjects);
+        moonPool = new List<GameObject>(numberOfActiveObjects);
         nebulaPool = new List<GameObject>(numberOfActiveObjects);
 
         lightGasParticlePool.AddRange(spawnObjectsInPool("LightGasParticles", lightGasParticlePrefab, numberOfActiveObjects));
@@ -72,11 +79,10 @@ public class ObjectSpawner : MonoBehaviour
         asteroid1Pool.AddRange(spawnObjectsInPool("Asteroids1", asteroid1Prefab, numberOfActiveObjects));
         asteroid2Pool.AddRange(spawnObjectsInPool("Asteroids2", asteroid2Prefab, numberOfActiveObjects));
         asteroid3Pool.AddRange(spawnObjectsInPool("Asteroids3", asteroid3Prefab, numberOfActiveObjects));
+        moonPool.AddRange(spawnObjectsInPool("Moons", moonPrefab, numberOfActiveObjects));
         nebulaPool.AddRange(spawnObjectsInPool("Nebulas", nebulaPrefab, numberOfActiveObjects));
 
         activateObjects(numberOfActiveObjects);
-
-        
     }
 
     List<GameObject> spawnObjectsInPool(string parentName, GameObject prefab, int num){
@@ -117,10 +123,13 @@ public class ObjectSpawner : MonoBehaviour
             return ref asteroid3Pool;
         }
         else if(randomRoll < objectChances[5]){
+            return ref moonPool;
+        }
+        else if(randomRoll < objectChances[6]){
             return ref nebulaPool;
         }
         else{
-            return ref asteroid3Pool;
+            return ref nebulaPool;
         }
     }
 
