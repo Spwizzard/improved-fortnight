@@ -854,7 +854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStage: 0
-  stage1Mass: 2
+  stage1Mass: 5
   stage2Mass: 50
   stage3Mass: 200
   stage4Mass: 1000

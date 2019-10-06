@@ -28,9 +28,9 @@ public class ObjectSpawner : MonoBehaviour
     public int currentStage = 0; 
 
     private float[] stage0Chances = {0.95f, 1.0f, 0.0f};
-    private float[] stage1Chances = {0.0f, 0.9f, 1.0f};
-    private float[] stage2Chances = {0.0f, 0.1f, 1.0f};
-    private float[] stage3Chances = {0.0f, 0.00f, 1.0f};
+    private float[] stage1Chances = {0.5f, 0.9f, 1.0f};
+    private float[] stage2Chances = {0.1f, 0.5f, 1.0f};
+    private float[] stage3Chances = {0.0f, 0.2f, 1.0f};
     private float[] stage4Chances = {0.0f, 0.0f, 1.0f};
     private float[] stage5Chances = {0.0f, 0.0f, 1.0f};
     private float[] stage6Chances = {0.0f, 0.0f, 1.0f};
@@ -147,21 +147,42 @@ public class ObjectSpawner : MonoBehaviour
                deactivatedObjectsList.Add(go);
             }
         }
-        int deactivatedCount = deactivatedObjectsList.Count;
         while(deactivatedObjectsList.Count > 0){
             GameObject go = deactivatedObjectsList[0];
-            deactivateObject(ref go);
+            List<GameObject> pool = getPoolUsingStage();
+            if(pool.Contains(go)){
+                // this object is already in the pool we want
+                // so just move it
+                resetObjectPosition(ref go);
+            }
+            else{
+                deactivateObject(ref go);
+                activateObjectFromPool(ref pool);
+            }
             deactivatedObjectsList.Remove(go);
         }
-        activateObjects(deactivatedCount);
-        
     }
     public void resetObject(GameObject go){
         GameObject listObject = activeObjectList.Find(x => x == go);
         if(listObject){
-            deactivateObject(ref listObject);
-            activateObjects(1);
+            List<GameObject> pool = getPoolUsingStage();
+            if(pool.Contains(listObject)){
+                // this object is already in the pool we want
+                // so just move it
+                resetObjectPosition(ref listObject);
+            }
+            else{
+                deactivateObject(ref listObject);
+                activateObjectFromPool(ref pool);
+            }
         }
+    }
+
+    void resetObjectPosition(ref GameObject go){
+        go.transform.position = playerGO.transform.position + getRandomVector3(spawnDistance);
+        Rigidbody rb = go.GetComponent<Rigidbody>();
+        rb.AddForce(getRandomVector3(0.5f), ForceMode.VelocityChange);
+        rb.AddTorque(getRandomVector3(0.5f), ForceMode.VelocityChange);
     }
 
     Vector3 getRandomVector3(float magnitude){
