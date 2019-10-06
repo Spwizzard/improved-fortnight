@@ -97,6 +97,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 567170234292070621}
     m_Modifications:
+    - target: {fileID: -927199367670048503, guid: e5a2489d49187af4e89339c448098802,
+        type: 3}
+      propertyPath: m_Name
+      value: Aestroid3
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: e5a2489d49187af4e89339c448098802,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -151,11 +156,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: e5a2489d49187af4e89339c448098802,
-        type: 3}
-      propertyPath: m_Name
-      value: Aestroid3
       objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: e5a2489d49187af4e89339c448098802,
         type: 3}

@@ -11,18 +11,19 @@ public class ObjectSpawner : MonoBehaviour
     public GameObject asteroid2Prefab;
     public GameObject asteroid3Prefab;
 
-    public int numberOfParticles = 100;
+    public int numberOfActiveObjects = 100;
     public float spawnDistance = 50f;
     private float startingSpawnDistance = 50f;
     public float despawnDistance = 20f;
     private float startingDespawnDistance = 20f;
-    public float upgradeChance = 0.1f;
 
-    private GameObject parentGO;
     private GameObject playerGO;
     private StageController gcStageController;
     private float playerMass; 
-    private List<GameObject> objectList;
+    private List<GameObject> activeObjectList;
+    private List<GameObject> lightGasParticlePool;
+    private List<GameObject> heavyGasCloudPool;
+    private List<GameObject> asteroidPool;
 
     public int currentStage = 0; 
 
@@ -48,20 +49,83 @@ public class ObjectSpawner : MonoBehaviour
         stageChances.Add(stage5Chances);
         stageChances.Add(stage6Chances);
 
-        objectList = new List<GameObject>(numberOfParticles);
         playerGO = GameObject.Find("PlayerStartingParticle");
-        parentGO = GameObject.Find("Objects");
+        
+        
+        activeObjectList = new List<GameObject>(numberOfActiveObjects);
+        lightGasParticlePool = new List<GameObject>(numberOfActiveObjects);
+        heavyGasCloudPool = new List<GameObject>(numberOfActiveObjects);
+        asteroidPool = new List<GameObject>(numberOfActiveObjects);
+
+        lightGasParticlePool.AddRange(spawnObjectsInPool("LightGasParticles", lightGasParticlePrefab, numberOfActiveObjects));
+        heavyGasCloudPool.AddRange(spawnObjectsInPool("HeavyGasClouds", heavyGasCloudPrefab, numberOfActiveObjects));
+        asteroidPool.AddRange(spawnObjectsInPool("Asteroids", asteroid1Prefab, numberOfActiveObjects / 3));
+        asteroidPool.AddRange(spawnObjectsInPool("Asteroids", asteroid2Prefab, numberOfActiveObjects / 3));
+        asteroidPool.AddRange(spawnObjectsInPool("Asteroids", asteroid3Prefab, (numberOfActiveObjects / 3) + 1));
+
+        activateObjects(numberOfActiveObjects);
 
         startingSpawnDistance = spawnDistance;
         startingDespawnDistance = despawnDistance;
         playerMass = playerGO.GetComponent<Rigidbody>().mass;
         gcStageController = gameObject.GetComponent<StageController>();
+    }
 
-        for(int i = 0; i < numberOfParticles; i++){
-            Vector3 pos = getRandomVector3(spawnDistance);
-            GameObject go = spawnObjectByStage(pos);
-            objectList.Add(go);
+    List<GameObject> spawnObjectsInPool(string parentName, GameObject prefab, int num){
+        List<GameObject> list = new List<GameObject>(num);
+        Transform parentTransform = GameObject.Find(parentName).transform;
+        for(int i = 0; i < num; i++){
+            GameObject go = Instantiate(prefab, new Vector3(), Quaternion.identity);
+            go.SetActive(false);
+            go.transform.parent = parentTransform;
+            list.Add(go);
         }
+        return list;
+    }
+
+    void activateObjects(int numToActivate){
+        for (int i = 0; i < numToActivate ; i++){
+            activateObjectFromPool(ref getPoolUsingStage());
+        }
+    }
+
+    ref List<GameObject> getPoolUsingStage(){
+        float randomRoll = Random.Range(0.0f, 1.0f);
+        float[] objectChances = stageChances[currentStage];
+        if(randomRoll < objectChances[0])
+        {
+            return ref lightGasParticlePool;
+        }
+        else if(randomRoll < objectChances[1]){
+            return ref heavyGasCloudPool;
+        }
+        else if(randomRoll < objectChances[2]){
+            return ref asteroidPool;
+        }
+        else{
+            return ref asteroidPool;
+        }
+    }
+
+    void activateObjectFromPool(ref List<GameObject> pool){
+        foreach(GameObject go in pool){
+            if(!go.activeSelf){
+                go.SetActive(true);
+                activeObjectList.Add(go);
+                go.transform.position = playerGO.transform.position + getRandomVector3(spawnDistance);
+                Rigidbody rb = go.GetComponent<Rigidbody>();
+                rb.AddForce(getRandomVector3(0.5f), ForceMode.VelocityChange);
+                rb.AddTorque(getRandomVector3(0.5f), ForceMode.VelocityChange);
+                return;
+            }
+        }
+        Debug.LogWarning("Somehow didn't find an inactive gameobject in pool!");
+        return;
+    }
+
+    void deactivateObject(ref GameObject go){
+        go.SetActive(false);
+        activeObjectList.Remove(go);
     }
 
     // Update is called once per frame
@@ -75,105 +139,29 @@ public class ObjectSpawner : MonoBehaviour
         playerMass = playerGO.GetComponent<Rigidbody>().mass;
         spawnDistance = startingSpawnDistance * (playerMass * 0.1f) + 30;
         despawnDistance = startingDespawnDistance * (playerMass * 0.1f) + 31;
-        List<GameObject> resetObjectList = new List<GameObject>();
-        foreach(GameObject go in objectList)
+        List<GameObject> deactivatedObjectsList = new List<GameObject>();
+        foreach(GameObject go in activeObjectList)
         {
             if(Vector3.Distance(go.transform.position, playerGO.transform.position) > despawnDistance)
             {
-                resetObjectList.Add(go);
+               deactivatedObjectsList.Add(go);
             }
         }
-        while(resetObjectList.Count > 0){
-            GameObject go = resetObjectList[0];
-            resetObjectList.RemoveAt(0);
-            resetObject(go);
+        int deactivatedCount = deactivatedObjectsList.Count;
+        while(deactivatedObjectsList.Count > 0){
+            GameObject go = deactivatedObjectsList[0];
+            deactivateObject(ref go);
+            deactivatedObjectsList.Remove(go);
         }
+        activateObjects(deactivatedCount);
         
     }
-
-    private GameObject spawnObjectByStage(Vector3 pos)
-    {
-        float upgradeRoll = Random.Range(0.0f, 1.0f);
-        float[] upgradeChances = stageChances[currentStage];
-        GameObject go;
-        if(upgradeRoll < upgradeChances[0])
-        {
-            go = spawnLightGasParticle(pos);
-        }
-        else if(upgradeRoll < upgradeChances[1]){
-            go = spawnHeavyGasCloud(pos);
-        }
-        else if(upgradeRoll < upgradeChances[2]){
-            go = spawnAsteroid(pos);
-        }
-        else{
-            go = spawnAsteroid(pos);
-        }
-
-        return go;
-    }
-
-    private GameObject spawnLightGasParticle(Vector3 pos){
-        GameObject go;
-        go = Instantiate(lightGasParticlePrefab, pos, Quaternion.identity);
-        Rigidbody rb = go.GetComponent<Rigidbody>();
-        rb.velocity = new Vector3();
-        rb.AddForce(getRandomVector3(0.25f), ForceMode.VelocityChange);
-        rb.AddTorque(getRandomVector3(0.5f), ForceMode.VelocityChange);
-        go.transform.parent = parentGO.transform;
-        return go;
-    }
-
-    private GameObject spawnHeavyGasCloud(Vector3 pos){
-        GameObject go;
-        go = Instantiate(heavyGasCloudPrefab, pos, Quaternion.identity);
-        Rigidbody rb = go.GetComponent<Rigidbody>();
-        rb.velocity = new Vector3();
-        rb.AddForce(getRandomVector3(1.0f), ForceMode.VelocityChange);
-        rb.AddTorque(getRandomVector3(1.0f), ForceMode.VelocityChange);
-        go.transform.parent = parentGO.transform;
-        return go;
-    }
-
-    private GameObject spawnAsteroid(Vector3 pos){
-        GameObject go;
-
-        float upgradeRoll = Random.Range(0.0f, 1.0f);
-        if(upgradeRoll < 0.33){
-            go = Instantiate(asteroid1Prefab, pos, Quaternion.identity);
-        }
-        else if(upgradeRoll < 0.66){
-            go = Instantiate(asteroid2Prefab, pos, Quaternion.identity);
-        }
-        else{
-            go = Instantiate(asteroid3Prefab, pos, Quaternion.identity);
-        }
-        Rigidbody rb = go.GetComponent<Rigidbody>();
-        rb.velocity = new Vector3();
-        rb.AddForce(getRandomVector3(10.0f), ForceMode.VelocityChange);
-        rb.AddTorque(getRandomVector3(0.5f), ForceMode.VelocityChange);
-        go.transform.parent = parentGO.transform;
-        return go;
-    }
-
     public void resetObject(GameObject go){
-        GameObject listObject = objectList.Find(x => x == go);
+        GameObject listObject = activeObjectList.Find(x => x == go);
         if(listObject){
-            objectList.Remove(listObject);
-            Destroy(listObject);
-            objectList.Add(spawnObjectByStage(playerGO.transform.position + getRandomVector3(spawnDistance)));
+            deactivateObject(ref listObject);
+            activateObjects(1);
         }
-    }
-
-    void moveObjectIntoRange(GameObject go)
-    {
-        // just move the object
-        go.transform.position = playerGO.transform.position + getRandomVector3(spawnDistance);
-        Rigidbody rb = go.GetComponent<Rigidbody>();
-        rb.velocity = new Vector3();
-        rb.AddForce(getRandomVector3(0.25f), ForceMode.Impulse);
-        rb.AddTorque(getRandomVector3(0.5f), ForceMode.Impulse);
-        
     }
 
     Vector3 getRandomVector3(float magnitude){
