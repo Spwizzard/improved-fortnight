@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //rb.mass = currentMass;
         mouse1Clicked = Input.GetButton("Fire1");
         mouse2Clicked = Input.GetButton("Fire2");
     }
@@ -49,5 +50,12 @@ public class PlayerMovement : MonoBehaviour
         if(rb.velocity.sqrMagnitude > squareMaxVelocity){
             rb.AddForce(-rb.velocity.normalized * (rb.velocity.magnitude - maxVelocity));
         }
+
+        //add a tiny amount of random torque
+        rb.AddTorque(getRandomVector3(1.0f), ForceMode.Acceleration);
+    }
+
+    Vector3 getRandomVector3(float magnitude){
+        return new Vector3(Random.Range(-magnitude, magnitude), Random.Range(-magnitude, magnitude), Random.Range(-magnitude, magnitude));
     }
 }

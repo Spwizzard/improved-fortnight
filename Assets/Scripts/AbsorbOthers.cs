@@ -22,7 +22,7 @@ public class AbsorbOthers : MonoBehaviour
     void FixedUpdate(){
         //Update the object's scale based on mass
         transform.localScale = new Vector3(1,1,1) * ((rb.mass/startingMass * 1.0f) + 1); 
-        eatMagnitude = startingEatMagnitude * ((rb.mass * 1.0f) + 1);
+        eatMagnitude = startingEatMagnitude * ((rb.mass * 0.5f) + 1);
     }
 
     void OnTriggerStay(Collider other)

@@ -14,6 +14,7 @@ public class MouseOrbit : MonoBehaviour {
     public float yMaxLimit = 80f;
     private Rigidbody rb;
     private Rigidbody targetRb;
+    private float currentMass; 
  
     float x = 0.0f;
     float y = 0.0f;
@@ -27,6 +28,7 @@ public class MouseOrbit : MonoBehaviour {
  
         rb = gameObject.GetComponent<Rigidbody>();
         targetRb = target.gameObject.GetComponent<Rigidbody>();
+        currentMass = targetRb.mass;
  
         // Make the rigid body not change rotation
         if (rb != null)
@@ -49,12 +51,21 @@ public class MouseOrbit : MonoBehaviour {
             y = ClampAngle(y, yMinLimit, yMaxLimit);
  
             Quaternion rotation = Quaternion.Euler(y, x, 0);
+            float lerpMass;
+            if(currentMass != targetRb.mass){
+                lerpMass = Mathf.Lerp(currentMass, targetRb.mass, Time.deltaTime);
+                currentMass = lerpMass;
+            }
+            else{
+                lerpMass = targetRb.mass;
+                currentMass = targetRb.mass;
+            }
  
-            distance = startingDistance * ((targetRb.mass * 0.5f) + 1);
+            distance = startingDistance * ((lerpMass * 0.5f) + 1);
 
             Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
             Vector3 position = rotation * negDistance + target.position;
- 
+
             transform.rotation = rotation;
             transform.position = position;
         }
