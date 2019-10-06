@@ -1037,7 +1037,7 @@ MonoBehaviour:
   stage5Mass: 150
   stage6Mass: 250
   stage7Mass: 500
-  stage8Mass: 1250
+  stage8Mass: 2000
 --- !u!4 &1321461567 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4098897960616496898, guid: 5d8c11d97209ecd43b0510a18ba6a760,
