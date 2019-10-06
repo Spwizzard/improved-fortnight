@@ -6,70 +6,156 @@ public class ObjectSpawner : MonoBehaviour
 {
 
     public GameObject lightGasParticlePrefab;
+    public GameObject heavyGasCloudPrefab;
+    public GameObject asteroidPrefab;
 
     public int numberOfParticles = 100;
     public float spawnDistance = 50f;
     private float startingSpawnDistance = 50f;
     public float despawnDistance = 20f;
     private float startingDespawnDistance = 20f;
+    public float upgradeChance = 0.1f;
 
     private GameObject parentGO;
     private GameObject playerGO;
+    private StageController gcStageController;
+    private float playerMass; 
     private List<GameObject> objectList;
+
+    public int currentStage = 0; 
+
+    private float[] stage0Chances = {0.94f, 0.99f, 1.0f};
+    private float[] stage1Chances = {0.2f, 0.7f, 1.0f};
+    private float[] stage2Chances = {0.0f, 0.2f, 1.0f};
+    private float[] stage3Chances = {0.0f, 0.05f, 1.0f};
+    private float[] stage4Chances = {0.0f, 0.0f, 1.0f};
+    private float[] stage5Chances = {0.0f, 0.0f, 1.0f};
+    private float[] stage6Chances = {0.0f, 0.0f, 1.0f};
+
+    private List<float[]> stageChances;
 
     // Start is called before the first frame update
     void Start()
     {
+        stageChances = new List<float[]>();
+        stageChances.Add(stage0Chances);
+        stageChances.Add(stage1Chances);
+        stageChances.Add(stage2Chances);
+        stageChances.Add(stage3Chances);
+        stageChances.Add(stage4Chances);
+        stageChances.Add(stage5Chances);
+        stageChances.Add(stage6Chances);
+
         objectList = new List<GameObject>(numberOfParticles);
         playerGO = GameObject.Find("PlayerStartingParticle");
         parentGO = GameObject.Find("Objects");
-        for(int i = 0; i < numberOfParticles; i++){
-            Vector3 pos = getRandomVector3(spawnDistance);
-            GameObject go = Instantiate(lightGasParticlePrefab, pos, Quaternion.identity);
-            go.transform.parent = parentGO.transform;
-            objectList.Add(go);
-            respawnObject(go);
-        }
 
         startingSpawnDistance = spawnDistance;
         startingDespawnDistance = despawnDistance;
+        playerMass = playerGO.GetComponent<Rigidbody>().mass;
+        gcStageController = gameObject.GetComponent<StageController>();
+
+        for(int i = 0; i < numberOfParticles; i++){
+            Vector3 pos = getRandomVector3(spawnDistance);
+            GameObject go = spawnObjectByStage(pos);
+            objectList.Add(go);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        currentStage = gcStageController.currentStage;
     }
 
     void FixedUpdate()
     {
+        playerMass = playerGO.GetComponent<Rigidbody>().mass;
+        spawnDistance = startingSpawnDistance * ((Mathf.Log(playerMass) * 0.75f) + 1);
+        despawnDistance = startingDespawnDistance * ((Mathf.Log(playerMass) * 0.75f) + 1);
         foreach(GameObject go in objectList)
         {
             if(Vector3.Distance(go.transform.position, playerGO.transform.position) > despawnDistance)
             {
-                respawnObject(go);
-                //Destroy(gameObject);
+                moveObjectIntoRange(go);
             }
         }
         
     }
 
+    private GameObject spawnObjectByStage(Vector3 pos)
+    {
+        float upgradeRoll = Random.Range(0.0f, 1.0f);
+        float[] upgradeChances = stageChances[currentStage];
+        GameObject go;
+        if(upgradeRoll < upgradeChances[0])
+        {
+            go = spawnLightGasParticle(pos);
+        }
+        else if(upgradeRoll < upgradeChances[1]){
+            go = spawnHeavyGasCloud(pos);
+        }
+        else if(upgradeRoll < upgradeChances[2]){
+            go = spawnAsteroid(pos);
+        }
+        else{
+            go = spawnAsteroid(pos);
+        }
+
+        return go;
+    }
+
+    private GameObject spawnLightGasParticle(Vector3 pos){
+        GameObject go;
+        go = Instantiate(lightGasParticlePrefab, pos, Quaternion.identity);
+        Rigidbody rb = go.GetComponent<Rigidbody>();
+        rb.velocity = new Vector3();
+        rb.AddForce(getRandomVector3(0.25f), ForceMode.Impulse);
+        rb.AddTorque(getRandomVector3(0.5f), ForceMode.Impulse);
+        go.transform.parent = parentGO.transform;
+        return go;
+    }
+
+    private GameObject spawnHeavyGasCloud(Vector3 pos){
+        GameObject go;
+        go = Instantiate(heavyGasCloudPrefab, pos, Quaternion.identity);
+        Rigidbody rb = go.GetComponent<Rigidbody>();
+        rb.velocity = new Vector3();
+        rb.AddForce(getRandomVector3(1.0f), ForceMode.Impulse);
+        rb.AddTorque(getRandomVector3(5.0f), ForceMode.Impulse);
+        go.transform.parent = parentGO.transform;
+        return go;
+    }
+
+    private GameObject spawnAsteroid(Vector3 pos){
+        GameObject go;
+        go = Instantiate(asteroidPrefab, pos, Quaternion.identity);
+        Rigidbody rb = go.GetComponent<Rigidbody>();
+        rb.velocity = new Vector3();
+        rb.AddForce(getRandomVector3(0.25f), ForceMode.Impulse);
+        rb.AddTorque(getRandomVector3(0.5f), ForceMode.Impulse);
+        go.transform.parent = parentGO.transform;
+        return go;
+    }
+
     public void resetObject(GameObject go){
         GameObject listObject = objectList.Find(x => x == go);
         if(listObject){
-            spawnDistance = startingSpawnDistance * ((Mathf.Log(playerGO.GetComponent<Rigidbody>().mass) * 0.75f) + 1);
-            despawnDistance = startingDespawnDistance * ((Mathf.Log(playerGO.GetComponent<Rigidbody>().mass) * 0.75f) + 1);
-            respawnObject(listObject);
+            objectList.Remove(listObject);
+            Destroy(listObject);
+            objectList.Add(spawnObjectByStage(playerGO.transform.position + getRandomVector3(spawnDistance)));
         }
     }
 
-    void respawnObject(GameObject go)
+    void moveObjectIntoRange(GameObject go)
     {
+        // just move the object
         go.transform.position = playerGO.transform.position + getRandomVector3(spawnDistance);
         Rigidbody rb = go.GetComponent<Rigidbody>();
         rb.velocity = new Vector3();
         rb.AddForce(getRandomVector3(0.25f), ForceMode.Impulse);
         rb.AddTorque(getRandomVector3(0.5f), ForceMode.Impulse);
+        
     }
 
     Vector3 getRandomVector3(float magnitude){

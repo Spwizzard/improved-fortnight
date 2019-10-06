@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 10
-  eatMagnitude: 0.1
+  eatMagnitude: 0.13
   playerForceScalar: 1
   gcObjectSpawner: {fileID: 0}
   currentMass: 0

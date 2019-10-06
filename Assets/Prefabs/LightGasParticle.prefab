@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4098897960616496898}
   - component: {fileID: -7487153309883854575}
-  - component: {fileID: 1490331358277273667}
   - component: {fileID: 7151497735875871769}
   - component: {fileID: 7221311509348728469}
   m_Layer: 0
@@ -51,20 +50,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1490331358277273667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7558388719466841317}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e61276bfacdb7d4e848dafc0586cf37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerTransform: {fileID: 0}
-  despawnDistance: 20
 --- !u!135 &7151497735875871769
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -90,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d03b3db686a88f54d8a299f1d79ff3d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityConstant: 1
+  gravityConstant: 0.5
 --- !u!1001 &5030225200457603818
 PrefabInstance:
   m_ObjectHideFlags: 0
