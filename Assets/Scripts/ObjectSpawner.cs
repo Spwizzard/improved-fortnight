@@ -110,8 +110,8 @@ public class ObjectSpawner : MonoBehaviour
         go = Instantiate(lightGasParticlePrefab, pos, Quaternion.identity);
         Rigidbody rb = go.GetComponent<Rigidbody>();
         rb.velocity = new Vector3();
-        rb.AddForce(getRandomVector3(0.25f), ForceMode.Impulse);
-        rb.AddTorque(getRandomVector3(0.5f), ForceMode.Impulse);
+        rb.AddForce(getRandomVector3(0.25f), ForceMode.VelocityChange);
+        rb.AddTorque(getRandomVector3(0.5f), ForceMode.VelocityChange);
         go.transform.parent = parentGO.transform;
         return go;
     }
@@ -121,8 +121,8 @@ public class ObjectSpawner : MonoBehaviour
         go = Instantiate(heavyGasCloudPrefab, pos, Quaternion.identity);
         Rigidbody rb = go.GetComponent<Rigidbody>();
         rb.velocity = new Vector3();
-        rb.AddForce(getRandomVector3(1.0f), ForceMode.Impulse);
-        rb.AddTorque(getRandomVector3(5.0f), ForceMode.Impulse);
+        rb.AddForce(getRandomVector3(1.0f), ForceMode.VelocityChange);
+        rb.AddTorque(getRandomVector3(5.0f), ForceMode.VelocityChange);
         go.transform.parent = parentGO.transform;
         return go;
     }
@@ -132,8 +132,8 @@ public class ObjectSpawner : MonoBehaviour
         go = Instantiate(asteroidPrefab, pos, Quaternion.identity);
         Rigidbody rb = go.GetComponent<Rigidbody>();
         rb.velocity = new Vector3();
-        rb.AddForce(getRandomVector3(0.25f), ForceMode.Impulse);
-        rb.AddTorque(getRandomVector3(0.5f), ForceMode.Impulse);
+        rb.AddForce(getRandomVector3(10.0f), ForceMode.VelocityChange);
+        rb.AddTorque(getRandomVector3(0.5f), ForceMode.VelocityChange);
         go.transform.parent = parentGO.transform;
         return go;
     }
