@@ -7,7 +7,9 @@ public class ObjectSpawner : MonoBehaviour
 
     public GameObject lightGasParticlePrefab;
     public GameObject heavyGasCloudPrefab;
-    public GameObject asteroidPrefab;
+    public GameObject asteroid1Prefab;
+    public GameObject asteroid2Prefab;
+    public GameObject asteroid3Prefab;
 
     public int numberOfParticles = 100;
     public float spawnDistance = 50f;
@@ -24,10 +26,10 @@ public class ObjectSpawner : MonoBehaviour
 
     public int currentStage = 0; 
 
-    private float[] stage0Chances = {0.94f, 0.99f, 1.0f};
-    private float[] stage1Chances = {0.2f, 0.7f, 1.0f};
-    private float[] stage2Chances = {0.0f, 0.2f, 1.0f};
-    private float[] stage3Chances = {0.0f, 0.05f, 1.0f};
+    private float[] stage0Chances = {0.95f, 1.0f, 0.0f};
+    private float[] stage1Chances = {0.0f, 0.9f, 1.0f};
+    private float[] stage2Chances = {0.0f, 0.1f, 1.0f};
+    private float[] stage3Chances = {0.0f, 0.00f, 1.0f};
     private float[] stage4Chances = {0.0f, 0.0f, 1.0f};
     private float[] stage5Chances = {0.0f, 0.0f, 1.0f};
     private float[] stage6Chances = {0.0f, 0.0f, 1.0f};
@@ -71,14 +73,20 @@ public class ObjectSpawner : MonoBehaviour
     void FixedUpdate()
     {
         playerMass = playerGO.GetComponent<Rigidbody>().mass;
-        spawnDistance = startingSpawnDistance * (playerMass * 0.75f);
-        despawnDistance = startingDespawnDistance * (playerMass * 0.75f);
+        spawnDistance = startingSpawnDistance * (playerMass * 0.1f) + 30;
+        despawnDistance = startingDespawnDistance * (playerMass * 0.1f) + 31;
+        List<GameObject> resetObjectList = new List<GameObject>();
         foreach(GameObject go in objectList)
         {
             if(Vector3.Distance(go.transform.position, playerGO.transform.position) > despawnDistance)
             {
-                moveObjectIntoRange(go);
+                resetObjectList.Add(go);
             }
+        }
+        while(resetObjectList.Count > 0){
+            GameObject go = resetObjectList[0];
+            resetObjectList.RemoveAt(0);
+            resetObject(go);
         }
         
     }
@@ -129,7 +137,17 @@ public class ObjectSpawner : MonoBehaviour
 
     private GameObject spawnAsteroid(Vector3 pos){
         GameObject go;
-        go = Instantiate(asteroidPrefab, pos, Quaternion.identity);
+
+        float upgradeRoll = Random.Range(0.0f, 1.0f);
+        if(upgradeRoll < 0.33){
+            go = Instantiate(asteroid1Prefab, pos, Quaternion.identity);
+        }
+        else if(upgradeRoll < 0.66){
+            go = Instantiate(asteroid2Prefab, pos, Quaternion.identity);
+        }
+        else{
+            go = Instantiate(asteroid3Prefab, pos, Quaternion.identity);
+        }
         Rigidbody rb = go.GetComponent<Rigidbody>();
         rb.velocity = new Vector3();
         rb.AddForce(getRandomVector3(10.0f), ForceMode.VelocityChange);

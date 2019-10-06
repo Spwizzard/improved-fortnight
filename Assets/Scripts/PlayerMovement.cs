@@ -43,8 +43,8 @@ public class PlayerMovement : MonoBehaviour
     {
         //Update the player's current mass
         rb.mass = currentMass;
-        transform.localScale = new Vector3(1,1,1) * ((currentMass * 0.5f) + 1); 
-        eatMagnitude = startingEatMagnitude * ((currentMass * 0.5f) + 1);
+        transform.localScale = new Vector3(1,1,1) * ((currentMass * 1.0f) + 1); 
+        eatMagnitude = startingEatMagnitude * ((currentMass * 1.0f) + 1);
 
         //Move if either mouse is clicked
         if(mouse1Clicked || mouse2Clicked){

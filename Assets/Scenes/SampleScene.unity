@@ -563,6 +563,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4098897960616496898, guid: 5d8c11d97209ecd43b0510a18ba6a760,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4098897960616496898, guid: 5d8c11d97209ecd43b0510a18ba6a760,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4098897960616496898, guid: 5d8c11d97209ecd43b0510a18ba6a760,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321461568, guid: 5d8c11d97209ecd43b0510a18ba6a760, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1321461566, guid: 5d8c11d97209ecd43b0510a18ba6a760, type: 3}
       propertyPath: gcObjectSpawner
       value: 
@@ -705,11 +724,15 @@ MonoBehaviour:
     type: 3}
   heavyGasCloudPrefab: {fileID: 1010384135306729201, guid: 67eceab75b2ca7e43bcce3b8a1cc20f3,
     type: 3}
-  asteroidPrefab: {fileID: 7461203032025883768, guid: 80b51d0ea2270b14d8976a62266b9f07,
+  asteroid1Prefab: {fileID: 7461203032025883768, guid: 80b51d0ea2270b14d8976a62266b9f07,
     type: 3}
-  numberOfParticles: 500
-  spawnDistance: 30
-  despawnDistance: 31
+  asteroid2Prefab: {fileID: 7461203032025883768, guid: f39612976e69cf14796771d7a6dd0d0b,
+    type: 3}
+  asteroid3Prefab: {fileID: 7461203032025883768, guid: 6574709c9fe5d88458d7791d56f18781,
+    type: 3}
+  numberOfParticles: 50
+  spawnDistance: 60
+  despawnDistance: 70
   upgradeChance: 1
   currentStage: 0
 --- !u!4 &1250615156
@@ -740,11 +763,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentStage: 0
   stage1Mass: 2
-  stage2Mass: 10
-  stage3Mass: 15
-  stage4Mass: 20
-  stage5Mass: 25
-  stage6Mass: 30
+  stage2Mass: 50
+  stage3Mass: 200
+  stage4Mass: 1000
+  stage5Mass: 5000
+  stage6Mass: 50000
 --- !u!4 &1321461567 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4098897960616496898, guid: 5d8c11d97209ecd43b0510a18ba6a760,
