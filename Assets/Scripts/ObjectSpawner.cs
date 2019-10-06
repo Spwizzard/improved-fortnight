@@ -28,9 +28,9 @@ public class ObjectSpawner : MonoBehaviour
     public int currentStage = 0; 
 
     private float[] stage0Chances = {0.95f, 1.0f, 0.0f};
-    private float[] stage1Chances = {0.5f, 0.9f, 1.0f};
-    private float[] stage2Chances = {0.1f, 0.5f, 1.0f};
-    private float[] stage3Chances = {0.0f, 0.2f, 1.0f};
+    private float[] stage1Chances = {0.8f, 0.98f, 1.0f};
+    private float[] stage2Chances = {0.6f, 0.9f, 1.0f};
+    private float[] stage3Chances = {0.4f, 0.7f, 1.0f};
     private float[] stage4Chances = {0.0f, 0.0f, 1.0f};
     private float[] stage5Chances = {0.0f, 0.0f, 1.0f};
     private float[] stage6Chances = {0.0f, 0.0f, 1.0f};
