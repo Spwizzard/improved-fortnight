@@ -10,6 +10,7 @@ public class ObjectSpawner : MonoBehaviour
     public GameObject asteroid1Prefab;
     public GameObject asteroid2Prefab;
     public GameObject asteroid3Prefab;
+    public GameObject nebulaPrefab;
 
     public int numberOfActiveObjects = 100;
     public float spawnDistance = 50f;
@@ -26,6 +27,7 @@ public class ObjectSpawner : MonoBehaviour
     private List<GameObject> asteroid1Pool;
     private List<GameObject> asteroid2Pool;
     private List<GameObject> asteroid3Pool;
+    private List<GameObject> nebulaPool;
 
     public int currentStage = 0; 
 
@@ -63,12 +65,14 @@ public class ObjectSpawner : MonoBehaviour
         asteroid1Pool = new List<GameObject>(numberOfActiveObjects);
         asteroid2Pool = new List<GameObject>(numberOfActiveObjects);
         asteroid3Pool = new List<GameObject>(numberOfActiveObjects);
+        nebulaPool = new List<GameObject>(numberOfActiveObjects);
 
         lightGasParticlePool.AddRange(spawnObjectsInPool("LightGasParticles", lightGasParticlePrefab, numberOfActiveObjects));
         heavyGasCloudPool.AddRange(spawnObjectsInPool("HeavyGasClouds", heavyGasCloudPrefab, numberOfActiveObjects));
         asteroid1Pool.AddRange(spawnObjectsInPool("Asteroids1", asteroid1Prefab, numberOfActiveObjects));
         asteroid2Pool.AddRange(spawnObjectsInPool("Asteroids2", asteroid2Prefab, numberOfActiveObjects));
         asteroid3Pool.AddRange(spawnObjectsInPool("Asteroids3", asteroid3Prefab, numberOfActiveObjects));
+        nebulaPool.AddRange(spawnObjectsInPool("Nebulas", nebulaPrefab, numberOfActiveObjects));
 
         activateObjects(numberOfActiveObjects);
 
@@ -111,6 +115,9 @@ public class ObjectSpawner : MonoBehaviour
         }
         else if(randomRoll < objectChances[4]){
             return ref asteroid3Pool;
+        }
+        else if(randomRoll < objectChances[5]){
+            return ref nebulaPool;
         }
         else{
             return ref asteroid3Pool;

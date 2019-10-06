@@ -27,13 +27,19 @@ public class AbsorbOthers : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if(other.attachedRigidbody && other.tag == "Object"){
+        if(other.attachedRigidbody && (other.tag == "Object") || (other.tag == "BackgroundObject")){
             Vector3 direction = transform.position - other.transform.position;
             if(direction.magnitude < eatMagnitude && rb.mass >= 1.1f * other.attachedRigidbody.mass){
                 rb.mass += other.attachedRigidbody.mass;
-                gcObjectSpawner.resetObject(other.gameObject);
+                if(other.tag == "Object"){
+                    gcObjectSpawner.resetObject(other.gameObject);
+                }
+                else if(other.tag == "BackgroundObject"){
+                    Destroy(other);
+                }
                 return;
             }
         }
+
     }
 }
