@@ -122,7 +122,7 @@ public class ObjectSpawner : MonoBehaviour
         Rigidbody rb = go.GetComponent<Rigidbody>();
         rb.velocity = new Vector3();
         rb.AddForce(getRandomVector3(1.0f), ForceMode.VelocityChange);
-        rb.AddTorque(getRandomVector3(5.0f), ForceMode.VelocityChange);
+        rb.AddTorque(getRandomVector3(1.0f), ForceMode.VelocityChange);
         go.transform.parent = parentGO.transform;
         return go;
     }

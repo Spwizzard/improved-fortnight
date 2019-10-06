@@ -51,8 +51,6 @@ public class MouseOrbit : MonoBehaviour {
             Quaternion rotation = Quaternion.Euler(y, x, 0);
  
             distance = startingDistance * ((Mathf.Log(targetRb.mass) * 1.5f) + 1);
- 
-            
 
             Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
             Vector3 position = rotation * negDistance + target.position;
