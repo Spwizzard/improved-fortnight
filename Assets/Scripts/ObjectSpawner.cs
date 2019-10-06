@@ -197,6 +197,16 @@ public class ObjectSpawner : MonoBehaviour
     }
 
     Vector3 getRandomVector3(float magnitude){
-        return new Vector3(Random.Range(-magnitude, magnitude), Random.Range(-magnitude, magnitude), Random.Range(-magnitude, magnitude));
+
+        return new Vector3(getRandomExcludingCenter(magnitude), getRandomExcludingCenter(magnitude), getRandomExcludingCenter(magnitude));
+    }
+
+    float getRandomExcludingCenter(float range){
+        if(Random.Range(0.0f, 1.0f) > 0.5f){
+            return Random.Range(range / 20 , range);
+        }
+        else{
+            return -Random.Range(range / 20 , range);
+        }
     }
 }

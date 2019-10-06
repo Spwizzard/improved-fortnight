@@ -33,10 +33,13 @@ public class PlayerModelChanger : MonoBehaviour
                 case 2:
                 case 3:
                 case 4:
+                case 5:
                     startingParticleModel.SetActive(false);
                     asteroid1Model.SetActive(true);
                     break;
-                case 5:
+                case 6:
+                case 7:
+                case 8:
                     asteroid1Model.SetActive(false);
                     asteroid3Model.SetActive(true);
                     break;

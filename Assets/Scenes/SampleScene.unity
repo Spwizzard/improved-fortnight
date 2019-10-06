@@ -874,7 +874,7 @@ MonoBehaviour:
     type: 3}
   asteroid3Prefab: {fileID: 7461203032025883768, guid: 6574709c9fe5d88458d7791d56f18781,
     type: 3}
-  numberOfActiveObjects: 75
+  numberOfActiveObjects: 100
   spawnDistance: 60
   despawnDistance: 80
   currentStage: 0
@@ -909,8 +909,8 @@ MonoBehaviour:
   stage2Mass: 25
   stage3Mass: 50
   stage4Mass: 75
-  stage5Mass: 125
-  stage6Mass: 200
+  stage5Mass: 150
+  stage6Mass: 250
 --- !u!4 &1321461567 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4098897960616496898, guid: 5d8c11d97209ecd43b0510a18ba6a760,
