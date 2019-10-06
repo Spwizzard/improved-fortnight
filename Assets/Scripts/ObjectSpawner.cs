@@ -71,8 +71,8 @@ public class ObjectSpawner : MonoBehaviour
     void FixedUpdate()
     {
         playerMass = playerGO.GetComponent<Rigidbody>().mass;
-        spawnDistance = startingSpawnDistance * ((Mathf.Log(playerMass) * 0.75f) + 1);
-        despawnDistance = startingDespawnDistance * ((Mathf.Log(playerMass) * 0.75f) + 1);
+        spawnDistance = startingSpawnDistance * (playerMass * 0.75f);
+        despawnDistance = startingDespawnDistance * (playerMass * 0.75f);
         foreach(GameObject go in objectList)
         {
             if(Vector3.Distance(go.transform.position, playerGO.transform.position) > despawnDistance)
