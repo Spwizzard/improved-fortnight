@@ -23,17 +23,19 @@ public class ObjectSpawner : MonoBehaviour
     private List<GameObject> activeObjectList;
     private List<GameObject> lightGasParticlePool;
     private List<GameObject> heavyGasCloudPool;
-    private List<GameObject> asteroidPool;
+    private List<GameObject> asteroid1Pool;
+    private List<GameObject> asteroid2Pool;
+    private List<GameObject> asteroid3Pool;
 
     public int currentStage = 0; 
 
-    private float[] stage0Chances = {0.95f, 1.0f, 0.0f};
-    private float[] stage1Chances = {0.8f, 0.98f, 1.0f};
-    private float[] stage2Chances = {0.6f, 0.9f, 1.0f};
-    private float[] stage3Chances = {0.4f, 0.7f, 1.0f};
-    private float[] stage4Chances = {0.0f, 0.0f, 1.0f};
-    private float[] stage5Chances = {0.0f, 0.0f, 1.0f};
-    private float[] stage6Chances = {0.0f, 0.0f, 1.0f};
+    private float[] stage0Chances = {0.95f, 1.0f, 0.0f, 0.0f, 0.0f};
+    private float[] stage1Chances = {0.7f, 0.98f, 1.0f, 0.0f, 0.0f};
+    private float[] stage2Chances = {0.2f, 0.4f, 0.95f, 1.0f, 0.0f};
+    private float[] stage3Chances = {0.0f, 0.2f, 0.8f, 1.0f, 0.0f};
+    private float[] stage4Chances = {0.0f, 0.1f, 0.3f, 0.8f, 1.0f};
+    private float[] stage5Chances = {0.0f, 0.0f, 0.2f, 0.6f, 1.0f};
+    private float[] stage6Chances = {0.0f, 0.0f, 0.0f, 0.4f, 1.0f};
 
     private List<float[]> stageChances;
 
@@ -50,25 +52,27 @@ public class ObjectSpawner : MonoBehaviour
         stageChances.Add(stage6Chances);
 
         playerGO = GameObject.Find("PlayerStartingParticle");
-        
-        
-        activeObjectList = new List<GameObject>(numberOfActiveObjects);
-        lightGasParticlePool = new List<GameObject>(numberOfActiveObjects);
-        heavyGasCloudPool = new List<GameObject>(numberOfActiveObjects);
-        asteroidPool = new List<GameObject>(numberOfActiveObjects);
-
-        lightGasParticlePool.AddRange(spawnObjectsInPool("LightGasParticles", lightGasParticlePrefab, numberOfActiveObjects));
-        heavyGasCloudPool.AddRange(spawnObjectsInPool("HeavyGasClouds", heavyGasCloudPrefab, numberOfActiveObjects));
-        asteroidPool.AddRange(spawnObjectsInPool("Asteroids", asteroid1Prefab, numberOfActiveObjects / 3));
-        asteroidPool.AddRange(spawnObjectsInPool("Asteroids", asteroid2Prefab, numberOfActiveObjects / 3));
-        asteroidPool.AddRange(spawnObjectsInPool("Asteroids", asteroid3Prefab, (numberOfActiveObjects / 3) + 1));
-
-        activateObjects(numberOfActiveObjects);
-
         startingSpawnDistance = spawnDistance;
         startingDespawnDistance = despawnDistance;
         playerMass = playerGO.GetComponent<Rigidbody>().mass;
         gcStageController = gameObject.GetComponent<StageController>();
+        
+        activeObjectList = new List<GameObject>(numberOfActiveObjects);
+        lightGasParticlePool = new List<GameObject>(numberOfActiveObjects);
+        heavyGasCloudPool = new List<GameObject>(numberOfActiveObjects);
+        asteroid1Pool = new List<GameObject>(numberOfActiveObjects);
+        asteroid2Pool = new List<GameObject>(numberOfActiveObjects);
+        asteroid3Pool = new List<GameObject>(numberOfActiveObjects);
+
+        lightGasParticlePool.AddRange(spawnObjectsInPool("LightGasParticles", lightGasParticlePrefab, numberOfActiveObjects));
+        heavyGasCloudPool.AddRange(spawnObjectsInPool("HeavyGasClouds", heavyGasCloudPrefab, numberOfActiveObjects));
+        asteroid1Pool.AddRange(spawnObjectsInPool("Asteroids1", asteroid1Prefab, numberOfActiveObjects));
+        asteroid2Pool.AddRange(spawnObjectsInPool("Asteroids2", asteroid2Prefab, numberOfActiveObjects));
+        asteroid3Pool.AddRange(spawnObjectsInPool("Asteroids3", asteroid3Prefab, numberOfActiveObjects));
+
+        activateObjects(numberOfActiveObjects);
+
+        
     }
 
     List<GameObject> spawnObjectsInPool(string parentName, GameObject prefab, int num){
@@ -100,10 +104,16 @@ public class ObjectSpawner : MonoBehaviour
             return ref heavyGasCloudPool;
         }
         else if(randomRoll < objectChances[2]){
-            return ref asteroidPool;
+            return ref asteroid1Pool;
+        }
+        else if(randomRoll < objectChances[3]){
+            return ref asteroid2Pool;
+        }
+        else if(randomRoll < objectChances[4]){
+            return ref asteroid3Pool;
         }
         else{
-            return ref asteroidPool;
+            return ref asteroid3Pool;
         }
     }
 
@@ -137,8 +147,8 @@ public class ObjectSpawner : MonoBehaviour
     void FixedUpdate()
     {
         playerMass = playerGO.GetComponent<Rigidbody>().mass;
-        spawnDistance = startingSpawnDistance * (playerMass * 0.1f) + 30;
-        despawnDistance = startingDespawnDistance * (playerMass * 0.1f) + 31;
+        spawnDistance = startingSpawnDistance * (playerMass * 0.05f) + 30;
+        despawnDistance = startingDespawnDistance * (playerMass * 0.05f) + 31;
         List<GameObject> deactivatedObjectsList = new List<GameObject>();
         foreach(GameObject go in activeObjectList)
         {
@@ -181,6 +191,7 @@ public class ObjectSpawner : MonoBehaviour
     void resetObjectPosition(ref GameObject go){
         go.transform.position = playerGO.transform.position + getRandomVector3(spawnDistance);
         Rigidbody rb = go.GetComponent<Rigidbody>();
+        rb.velocity = new Vector3();
         rb.AddForce(getRandomVector3(0.5f), ForceMode.VelocityChange);
         rb.AddTorque(getRandomVector3(0.5f), ForceMode.VelocityChange);
     }

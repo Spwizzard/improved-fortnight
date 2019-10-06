@@ -10,14 +10,8 @@ public class PlayerMovement : MonoBehaviour
     private float squareMaxVelocity;
     private Transform cameraTransform;
     public float maxVelocity = 3f;
-    public float eatMagnitude = 0.1f;
-    private float startingEatMagnitude = 0.1f;
     public float playerForceScalar = 2.0f;
-
-    public ObjectSpawner gcObjectSpawner;
     public float currentMass;
-
-
     private Rigidbody rb;
 
     // Start is called before the first frame update
@@ -28,8 +22,6 @@ public class PlayerMovement : MonoBehaviour
 
         rb = gameObject.GetComponent<Rigidbody>();
         currentMass = rb.mass;
-
-        startingEatMagnitude = eatMagnitude;
     }
 
     // Update is called once per frame
@@ -41,10 +33,6 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        //Update the player's current mass
-        rb.mass = currentMass;
-        transform.localScale = new Vector3(1,1,1) * ((currentMass * 1.0f) + 1); 
-        eatMagnitude = startingEatMagnitude * ((currentMass * 1.0f) + 1);
 
         //Move if either mouse is clicked
         if(mouse1Clicked || mouse2Clicked){
@@ -54,25 +42,12 @@ public class PlayerMovement : MonoBehaviour
             if(mouse2Clicked){
                 direction *= -1;
             }
-            rb.AddForce(direction * playerForceScalar * currentMass);
+            rb.AddForce(direction * playerForceScalar * rb.mass);
         }  
 
         //cap velocity
         if(rb.velocity.sqrMagnitude > squareMaxVelocity){
             rb.AddForce(-rb.velocity.normalized * (rb.velocity.magnitude - maxVelocity));
-        }
-    }
-     void OnTriggerStay(Collider other)
-    {
-        if(other.attachedRigidbody){
-
-            Vector3 direction = transform.position - other.transform.position;
-            if(direction.magnitude < eatMagnitude){
-                currentMass += other.attachedRigidbody.mass;
-                gcObjectSpawner.resetObject(other.gameObject);
-                Debug.Log(currentMass);
-                return;
-            }
         }
     }
 }

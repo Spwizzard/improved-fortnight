@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 1321461568}
   - component: {fileID: 1321461566}
   - component: {fileID: 1321461571}
+  - component: {fileID: -6155665070338172742}
   m_Layer: 0
   m_Name: PlayerStartingParticle
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +77,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1321461566
 MonoBehaviour:
@@ -91,9 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 10
-  eatMagnitude: 0.13
   playerForceScalar: 1
-  gcObjectSpawner: {fileID: 0}
   currentMass: 0
 --- !u!135 &1321461571
 SphereCollider:
@@ -108,6 +107,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-6155665070338172742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7558388719466841317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 302abc0f4c0b96e46b42b6a66f102fbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eatMagnitude: 0.1
 --- !u!1001 &5030225200457603818
 PrefabInstance:
   m_ObjectHideFlags: 0

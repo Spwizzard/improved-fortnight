@@ -9520,7 +9520,7 @@ GameObject:
   - component: {fileID: 2119814843}
   m_Layer: 0
   m_Name: HeavyGasCloud
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9582,4 +9582,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d03b3db686a88f54d8a299f1d79ff3d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityConstant: 1.5
+  gravityConstant: 9.8
