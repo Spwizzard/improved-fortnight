@@ -6,6 +6,12 @@ using UnityEngine;
  * https://unity3d.com/learn/tutorials/projects/2d-roguelike-tutorial/audio-and-sound-manager
  * The script should continued to be built upon as functions that are needed are discovered.
  */
+
+/*
+ * A note from Jacob - I need to clean up this overall script and I believe I should
+ * seperate it into a SFX Manager and a Music Manager. Primarily due to the odd decision that the manager just pulls
+ * the audio source off from itself. So in the inspector its confusing to see the same audio source name when it isn't.
+ */
 public class SoundManager : MonoBehaviour
 {
 
@@ -15,7 +21,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource sfxSource;
     public AudioSource musicSource;
 
-    //Used for instantiates
+    //Used for instantiates. It will reference a prefab with a game object with an empty audio source.
     public GameObject prefabSFX;
 
     // Will be used in the randomize section of script to further change the sfx.
@@ -64,7 +70,7 @@ public class SoundManager : MonoBehaviour
         AudioSource.PlayClipAtPoint(clip, audioLocation.position);
     }
 
-    //Will instatiate an object with a audio source based on desired based settings and then edit the pitch randomly
+    //Will instatiate an object with a audio source based on desired base settings and then edit the pitch randomly
     public void RandomizeSfx(params AudioClip[] clips)
     {
 
