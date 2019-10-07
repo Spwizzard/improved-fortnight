@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /* The sound manager script is based off of: 
  * https://unity3d.com/learn/tutorials/projects/2d-roguelike-tutorial/audio-and-sound-manager
@@ -28,6 +29,10 @@ public class SoundManager : MonoBehaviour
     public float lowPitchRange = 0.9f;
     public float highPitchRange = 1.1f;
 
+    //Used to manage the music playing on overall scene
+    public AudioClip titleTheme, gameTheme;
+    private Scene currentScene;
+
     // Sets the instance and allows for it to exist betweens scenes without being destroyed.
     void Awake()
     {
@@ -46,6 +51,38 @@ public class SoundManager : MonoBehaviour
 
     }
 
+    void Start()
+    {
+        currentScene = SceneManager.GetActiveScene();
+
+        if (currentScene.buildIndex == 0)
+        {
+            SetMusic(titleTheme);
+        }
+
+        else if (currentScene.buildIndex == 1)
+        {
+            SetMusic(gameTheme);
+        }
+    }
+
+    void Update()
+    {
+         if (currentScene != SceneManager.GetActiveScene())
+        {
+            currentScene = SceneManager.GetActiveScene();
+
+            if (currentScene.buildIndex == 0)
+            {
+                SetMusic(titleTheme);
+            }
+
+            else if (currentScene.buildIndex == 1)
+            {
+                SetMusic(gameTheme);
+            }
+        }
+    }
 
     //Public utility methods
 
