@@ -40,8 +40,9 @@ public class ObjectSpawner : MonoBehaviour
     private float[] stage4Chances = {0.0f, 0.1f, 0.3f, 0.8f, 0.98f, 1.0f, 0.0f};
     private float[] stage5Chances = {0.0f, 0.0f, 0.2f, 0.6f, 0.95f, 1.0f, 0.0f};
     private float[] stage6Chances = {0.0f, 0.0f, 0.0f, 0.4f, 0.9f, 1.0f, 0.0f};
-    private float[] stage7Chances = {0.0f, 0.0f, 0.0f, 0.0f, 0.4f, 1.0f, 0.0f};
+    private float[] stage7Chances = {0.0f, 0.0f, 0.0f, 0.0f, 0.7f, 1.0f, 0.0f};
     private float[] stage8Chances = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.98f, 1.0f};
+    private float[] stage9Chances = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
 
     private List<float[]> stageChances;
 

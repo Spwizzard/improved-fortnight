@@ -35,7 +35,7 @@ public class AbsorbOthers : MonoBehaviour
                     gcObjectSpawner.resetObject(other.gameObject);
                 }
                 else if(other.tag == "BackgroundObject"){
-                    Destroy(other);
+                    Destroy(other.gameObject);
                 }
                 return;
             }
