@@ -13,8 +13,9 @@ public class LevelManager : MonoBehaviour
             SceneManager.LoadScene("MainMenu");
         }
 
-        else {
-            Application.Quit();
+        else if (Input.GetKeyDown("escape"))
+        {
+           Application.Quit();
         }
     }
 
