@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eatMagnitude: 0.15
+  absorbNoise: {fileID: 8300000, guid: d48df21c30eb93d4c9f77a70afd4a864, type: 3}
 --- !u!1001 &5030225200457603818
 PrefabInstance:
   m_ObjectHideFlags: 0

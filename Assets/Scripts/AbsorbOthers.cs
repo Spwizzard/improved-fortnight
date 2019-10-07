@@ -10,6 +10,8 @@ public class AbsorbOthers : MonoBehaviour
     private Rigidbody rb;
     private float startingMass;
 
+    //Clips needed for appropriate sounds effects
+    public AudioClip absorbNoise;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +32,8 @@ public class AbsorbOthers : MonoBehaviour
         if(other.attachedRigidbody && (other.tag == "Object") || (other.tag == "BackgroundObject")){
             Vector3 direction = transform.position - other.transform.position;
             if(direction.magnitude < eatMagnitude && rb.mass >= 1.1f * other.attachedRigidbody.mass){
+                //Play Absorb Noise
+                SoundManager.instance.PlaySingle(absorbNoise);
                 rb.mass += other.attachedRigidbody.mass;
                 if(other.tag == "Object"){
                     gcObjectSpawner.resetObject(other.gameObject);

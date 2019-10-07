@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5000113599183870018}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 539.1997, y: 267.25897, z: 9.725}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -51,6 +51,8 @@ MonoBehaviour:
     type: 3}
   lowPitchRange: 0.9
   highPitchRange: 1.1
+  titleTheme: {fileID: 8300000, guid: c7dea36c52de500478e81bac48a9e1a6, type: 3}
+  gameTheme: {fileID: 8300000, guid: 72a8a4db730d50247b6ab211f5c42c50, type: 3}
 --- !u!82 &7489949660667025667
 AudioSource:
   m_ObjectHideFlags: 0
